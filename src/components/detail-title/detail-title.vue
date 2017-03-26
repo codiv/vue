@@ -1,5 +1,5 @@
 <template>
-<div class="title">
+<div class="detail-title">
 	<div class="line"></div>
 	<div class="text">{{dataText}}</div>
 	<div class="line"></div>
@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style lang="stylus">
-.title
+.detail-title
 	display:flex
 	width:80%
 	margin:28px auto 24px auto
