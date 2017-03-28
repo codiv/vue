@@ -2,7 +2,7 @@
 	<div class="goods">
 		<div class="menu-wrapper" ref="menuWrapper">
 			<ul>
-				<li v-for="item in goods" class="menu-item">
+				<li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}" @click="_menuScroll(index,$event)">
 					<span class="text border-1px"><em class="icon" v-show="item.type>0" :class="classMain[item.type]"></em>{{item.name}}</span>
 				</li>
 			</ul>
@@ -42,11 +42,24 @@ export default {
 			goods: [],
 			classMain: [],
 			listHeight: [],
-			startY: 0
+			scrollY: 0
+		}
+	},
+	computed: {
+		currentIndex () {
+			for (let i = 0; i < this.listHeight.length; i++) {
+				let height1 = this.listHeight[i]
+				let height2 = this.listHeight[i + 1]
+				if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+					return i
+				}
+			}
+			return 0
 		}
 	},
 	created () {
 		this.classMain = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+
 		this.$http.get('/api/goods').then((response) => {
 			response = response.body
 			if (response.errno === ERR_OK) {
@@ -54,15 +67,29 @@ export default {
 				this.$nextTick(() => {
 					this._goodScroll()
 					this._foodListHeight()
-					console.log(this.listHeight)
 				})
 			}
 		})
 	},
 	methods: {
+		_menuScroll (index, event) {
+			let foodList = this.$refs.foodList
+			if (!event._constructed) { // 处理非手机运行时的点击问题（出现双点击问题）
+				return
+			}
+			this.foodScrool.scrollToElement(foodList[index], 300) // 滚动到某个元素 300是动画时间
+		},
 		_goodScroll () {
-			this.menuScroll = new BScroll(this.$refs.menuWrapper, {})
-			this.foodScrool = new BScroll(this.$refs.foodWrapper, {})
+			this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+				click: true // 打开侧边菜单的点击事件，因为better scroll默认禁止了tach、tap、click事件
+			})
+
+			this.foodScrool = new BScroll(this.$refs.foodWrapper, {
+				probeType: 3 // 时时告诉我们效果，如滚动时
+			})
+			this.foodScrool.on('scroll', (pos) => {
+				this.scrollY = Math.abs(Math.round(pos.y))// 配制“probeType: 3”才会实现时时取值
+			})
 		},
 		_foodListHeight () {
 			let foodList = this.$refs.foodList
