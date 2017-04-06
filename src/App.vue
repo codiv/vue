@@ -12,7 +12,7 @@
 	</div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import header from 'components/header/header'
 const ERR_OK = 0
 export default {
@@ -35,18 +35,18 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" rel="stylesheet/stylus">
 @import "./common/stylus/mixin.styl"
 .tab ul
-	display:flex; 
+	display:flex;
 	border-1px(rgba(1,17,27,0.1))
 	li
-		flex:1; 
-		text-align: center; 
+		flex:1;
+		text-align: center;
 		height:40px;
 		a
-			display:block; 
-			line-height:40px; 
+			display:block;
+			line-height:40px;
 			font-size:14px;
 			&.active
 				color:rgb(240,20,20);
