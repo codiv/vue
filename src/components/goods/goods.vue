@@ -41,7 +41,7 @@
 			<shopcart ref="onshopcart" :selectFoods="selectFoods" :minPrice="seller.minPrice"
 					  :deliveryPrice="seller.deliveryPrice"></shopcart>
 		</div>
-		<food ref="food" :food="selectedFood"></food>
+		<food ref="food" :food="selectedFood" @add="addFood"></food>
 	</div>
 </template>
 

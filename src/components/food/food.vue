@@ -24,6 +24,17 @@
 						<cartcontrol :food="food" @add="addFood"></cartcontrol>
 					</div>
 				</div>
+				<split></split>
+				<div class="info">
+					<h1 class="title">商品信息</h1>
+					<p class="text">{{food.info}}</p>
+				</div>
+				<split></split>
+				<div class="rating">
+					<h1 class="title">商品评价</h1>
+					<ratingSelect :desc="desc" :selectType="selectType" :ratings="food.ratings"
+								  :onlyContent="onlyContent"></ratingSelect>
+				</div>
 			</div>
 		</div>
 	</transition>
@@ -33,7 +44,14 @@
 	import Vue from "vue";
 	import BScroll from 'better-scroll';
 	import cartcontrol from "components/cartcontrol/cartcontrol";
-	export default{
+	import split from "components/split/split";
+	import ratingSelect from "components/ratingselect/ratingselect";
+
+	const POSITION = 0;
+	const NEGATIVE = 1;
+	const ALL = 2;
+
+	export default {
 		props: {
 			food: {
 				type: Object
@@ -41,12 +59,21 @@
 		},
 		data () {
 			return {
-				showFlag: false
+				showFlag: false,
+				selectType: ALL,
+				onlyContent: true,
+				desc: {
+					all: '全部',
+					positive: '推荐',
+					negative: '吐槽'
+				}
 			}
 		},
 		methods: {
 			show () {
 				this.showFlag = true;
+				this.selectType = ALL; //进入的时候初始化
+				this.onlyContent = true; //进入的时候初始化
 				this.$nextTick(() => {
 					if (!this.foodScroll) {
 						this.foodScroll = new BScroll(this.$refs.food, {
@@ -65,17 +92,17 @@
 				if (!event._constructed) {
 					return;
 				}
-				console.log(event.target)
 				this.$emit('add', event.target);
 				Vue.set(this.food, "count", 1)
 			},
 			addFood (target) {
-//				console.log(target)
 				this.$emit('add', target);
 			}
 		},
 		components: {
-			cartcontrol
+			cartcontrol,
+			ratingSelect,
+			split
 		}
 	}
 </script>
@@ -162,4 +189,23 @@
 					position: absolute
 					right: 12px
 					bottom: 12px
+			.info
+				padding: 18px
+				.title
+					line-height: 14px;
+					margin-bottom: 6px;
+					font-size: 14px;
+					color: #07111b;
+				.text
+					line-height: 24px;
+					padding: 0 8px;
+					font-size: 12px;
+					color: #4d555d;
+			.rating
+				padding-top: 18px
+				.title
+					line-height: 14px;
+					margin-left: 18px;
+					font-size: 14px;
+					color: #07111b;
 </style>
