@@ -22,36 +22,34 @@ var proxyTable = config.dev.proxyTable
 
 var app = express()
 
-// 模拟后台数据 start
-var appData = require('../data.json')
-var seller = appData.seller
-var goods = appData.goods
-var ratings = appData.ratings
+var appRoutes = require('../data.json')
+var seller = appRoutes.seller
+var goods = appRoutes.goods
+var ratings = appRoutes.ratings
 
 var apiRoutes = express.Router()
-
-apiRoutes.get('/seller', function (req, res) {
+apiRoutes.get('/seller', function(req, res){
   res.json({
-    errno: 0,
-    data: seller
+    errno:0,
+    data:seller
   })
 })
 
-apiRoutes.get('/goods', function (req, res) {
+apiRoutes.get('/goods', function(req, res){
   res.json({
-    errno: 0,
-    data: goods
+    errno:0,
+    data:goods
   })
 })
 
-apiRoutes.get('/ratings', function (req, res) {
+apiRoutes.get('/ratings', function(req, res){
   res.json({
-    errno: 0,
-    data: ratings
+    errno:0,
+    data:ratings
   })
 })
 
-app.use('/api', apiRoutes) // 模拟后台数据 end
+app.use('/api', apiRoutes)
 
 var compiler = webpack(webpackConfig)
 

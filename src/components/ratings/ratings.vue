@@ -1,11 +1,14 @@
 <template>
-	<div>这是评价</div>
+<div>ratings</div>
+
 </template>
 
-<script>
-	export default {}
+<script type="text/ecmascript-6">
+
+
 </script>
 
-<style>
+<style lang="stylus" rel="stylesheet/stylus">
+
 
 </style>

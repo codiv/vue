@@ -23,15 +23,6 @@ time, mark, audio, video, input {
     vertical-align: baseline;
 }
 
-.clearfix:after{
-    display: block;
-    content: ".";
-    height: 0;
-    line-height: 0;
-    clear: both;
-    visibility: hidden;
-}
-
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, menu, nav, section {

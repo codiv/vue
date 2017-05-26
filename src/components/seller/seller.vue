@@ -1,11 +1,14 @@
 <template>
-	<div>这是商家</div>
+<div>seller</div>
+
 </template>
 
-<script>
-	export default {}
+<script type="text/ecmascript-6">
+
+
 </script>
 
-<style>
+<style lang="stylus" rel="stylesheet/stylus">
+
 
 </style>
