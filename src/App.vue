@@ -10,7 +10,7 @@
 					<router-link to="/seller">评价</router-link>
 				</li>
 				<li class="tab-item">
-					<router-link to="/ratings">商家</router-link>
+					<router-link to="/ratings">111111</router-link>
 				</li>
 			</ul>
 		</div>
