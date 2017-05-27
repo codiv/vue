@@ -33,7 +33,25 @@
 				<div class="rating">
 					<h1 class="title">商品评价</h1>
 					<ratingSelect :desc="desc" :selectType="selectType" :ratings="food.ratings"
-								  :onlyContent="onlyContent"></ratingSelect>
+								  :onlyContent="onlyContent" @select="selectRating"
+								  @toggle="toggleContent"></ratingSelect>
+				</div>
+				<div class="rating-wrapper">
+					<ul v-show="food.ratings && food.ratings.length">
+						<li v-for="rating in food.ratings" class="rating-item border-1px"
+							v-show="needShow(rating.rateType,rating.text)">
+							<div class="user">
+								<span class="name">{{rating.username}}</span>
+								<img :src="rating.avatar" class="avatar" width="12" height="12">
+							</div>
+							<div class="time">{{rating.rateTime}}</div>
+							<p class="text">
+								<span :class="{'icon-thumb_up':rating.rateType===0,'icon-thumb_down':rating.rateType===1}"></span>
+								{{rating.text}}
+							</p>
+						</li>
+					</ul>
+					<div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
 				</div>
 			</div>
 		</div>
@@ -80,7 +98,7 @@
 							click: true
 						})
 					} else {
-						this.foodScroll.refresh();
+						this.foodScroll.refresh(); //重置滚动组件
 					}
 
 				})
@@ -97,6 +115,28 @@
 			},
 			addFood (target) {
 				this.$emit('add', target);
+			},
+			selectRating (type) {
+				this.selectType = type;
+				this.$nextTick(() => {
+					this.foodScroll.refresh(); //重置滚动组件
+				})
+			},
+			toggleContent () {
+				this.onlyContent = !this.onlyContent;
+				this.$nextTick(() => {
+					this.foodScroll.refresh(); //重置滚动组件
+				})
+			},
+			needShow (type, text) {
+				if (this.onlyContent && !text) {
+					return false;
+				}
+				if (this.selectType === ALL) {
+					return true;
+				} else {
+					return type === this.selectType;
+				}
 			}
 		},
 		components: {
@@ -108,6 +148,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+	@import "../../common/stylus/mixin.styl"
 	.food
 		position: fixed
 		top: 0
@@ -208,4 +249,45 @@
 					margin-left: 18px;
 					font-size: 14px;
 					color: #07111b;
+			.rating-wrapper
+				padding: 0 18px;
+				.no-rating
+					padding: 16px 0;
+					font-size: 12px;
+					color: #93999f;
+				.rating-item
+					position: relative;
+					padding: 16px 0;
+					border-1px(rgba(7, 17, 27, 0.1))
+					.user
+						position: absolute;
+						right: 0;
+						top: 16px;
+						line-height: 12px;
+						font-size: 0;
+						.name
+							display: inline-block;
+							margin-right: 6px;
+							vertical-align: top;
+							font-size: 10px;
+							color: #93999f;
+						img
+							border-radius: 50%
+					.time
+						margin-bottom: 6px;
+						line-height: 12px;
+						font-size: 10px;
+						color: #93999f;
+					.text
+						line-height: 16px;
+						font-size: 12px;
+						color: #07111b;
+						.icon-thumb_up, .icon-thumb_down
+							margin-right: 4px;
+							line-height: 16px;
+							font-size: 12px;
+						.icon-thumb_up
+							color: #00a0dc;
+						.icon-thumb_down
+							color: #93999f
 </style>

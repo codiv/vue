@@ -15,6 +15,10 @@ Vue.use(VueRedource)
 const routes = [
     {
         path: '/',
+        redirect: '/goods'
+    },
+    {
+        path: '/',
         component: goods
     },
     {
