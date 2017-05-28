@@ -1,17 +1,17 @@
 <template>
 	<div class="ratingSelect">
 		<div class="rating-type border-1px">
-			<span class="block positive" :class="{'active':selectType===2}">
+			<span class="block positive" :class="{'active':selectType===2}" @click="select(2,$event)">
 				{{desc.all}}<span class="count">{{ratings.length}}</span>
 			</span>
-			<span class="block positive" :class="{'active':selectType===0}">
-				{{desc.positive}}<span class="count">40</span>
+			<span class="block positive" :class="{'active':selectType===0}" @click="select(0,$event)">
+				{{desc.positive}}<span class="count">{{positive.length}}</span>
 			</span>
-			<span class="block negative" :class="{'active':selectType===1}">
-				{{desc.negative}}<span class="count">7</span>
+			<span class="block negative" :class="{'active':selectType===1}" @click="select(1,$event)">
+				{{desc.negative}}<span class="count">{{negative.length}}</span>
 			</span>
 		</div>
-		<div class="switch" :class="{'on':onlyContent}">
+		<div class="switch" :class="{'on':onlyContent}" @click="toggleContent">
 			<span class="icon-check_circle"></span>
 			<span class="text">只看有内容的评价</span>
 		</div>
@@ -48,6 +48,30 @@
 						negative: '不满意'
 					};
 				}
+			}
+		},
+		methods: {
+			select (type, event) {
+				if (!event._constructed) {
+					return;
+				}
+				this.$emit('select', type);
+			},
+			toggleContent (event) {
+				if (!event._constructed) {
+					return;
+				}
+				this.$emit('toggle')
+			}
+		},
+		computed: {
+			positive () {
+				return this.ratings.filter((rating) =>rating.rateType === POSITION); //ES6简写
+			},
+			negative () {
+				return this.ratings.filter((rating) => {
+					return rating.rateType === NEGATIVE;
+				});
 			}
 		}
 	}
