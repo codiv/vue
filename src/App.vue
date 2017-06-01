@@ -7,10 +7,10 @@
 					<router-link to="/goods">商品</router-link>
 				</li>
 				<li class="tab-item">
-					<router-link to="/seller">评价</router-link>
+					<router-link to="/ratings">评价</router-link>
 				</li>
 				<li class="tab-item">
-					<router-link to="/ratings">商家</router-link>
+					<router-link to="/seller">商家</router-link>
 				</li>
 			</ul>
 		</div>
@@ -31,7 +31,7 @@
 			}
 		},
 		created () {
-			this.$http.get('api/seller', {name:"abc"}).then(response => {
+			this.$http.get('api/seller').then(response => {
 				const res = response.body
 				if (res.errno === ERR_OK) {
 					this.seller = res.data

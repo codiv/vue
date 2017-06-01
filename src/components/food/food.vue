@@ -107,7 +107,6 @@
 					} else {
 						this.foodScroll.refresh(); //重置滚动组件
 					}
-
 				})
 			},
 			hide () {
