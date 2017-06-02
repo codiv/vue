@@ -92,6 +92,11 @@
 				})
 			})
 		},
+		methods:{
+			_innerScroll () {
+
+			}
+		},
 		components: {
 			star,
 			split
