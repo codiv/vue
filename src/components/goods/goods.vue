@@ -71,7 +71,7 @@
 		},
 		created () {
 			this.classMain = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-			this.$http.get('api/goods', {name: "abc"}).then((response) => {
+			this.$http.get('api/goods').then((response) => {
 				let res = response.body;
 				if (res.errno === ERR_OK) {
 					this.goods = res.data;
