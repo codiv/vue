@@ -35,7 +35,34 @@
 			</div>
 			<split></split>
 			<div class="bulletin">
-
+				<h1 class="title">公告与活动</h1>
+				<div class="content-wrapper border-1px">
+					<p class="content">{{seller.bulletin}}</p>
+				</div>
+				<ul class="supports">
+					<li class="support-item border-1px" v-for="item in seller.supports">
+						<span class="icon" :class="classMap[item.type]"></span>
+						<span class="text">{{item.description}}</span>
+					</li>
+				</ul>
+			</div>
+			<split></split>
+			<div class="pics">
+				<h1 class="title">商家实景</h1>
+				<div class="pic-wrapper">
+					<ul class="pic-list">
+						<li class="pic-item" v-for="item in seller.pics">
+							<img :src="item" width="120" height="90">
+						</li>
+					</ul>
+				</div>
+			</div>
+			<split></split>
+			<div class="info">
+				<h1 class="title border-1px">商家信息</h1>
+				<ul>
+					<li class="info-item border-1px" v-for="info in seller.infos">{{info}}</li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -45,13 +72,20 @@
 	import BSscroll from 'better-scroll';
 	import star from 'components/star/star';
 	import split from 'components/split/split';
+
 	export default {
 		props: {
 			seller: {
 				type: Object
 			}
 		},
+		data () {
+			return {
+				classMap: []
+			}
+		},
 		created () {
+			this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
 			this.$nextTick(() => {
 				this.scroll = new BSscroll(this.$refs.seller, {
 					click: true
@@ -133,4 +167,80 @@
 					line-height: 10px;
 					font-size: 10px;
 					color: #4d555d;
+		.bulletin
+			padding: 18px 18px 0 18px;
+			.title
+				margin-bottom: 8px;
+				line-height: 14px;
+				color: #07111b;
+				font-size: 14px;
+			.content-wrapper
+				padding: 0 12px 16px 12px;
+				position: relative;
+				border-1px(rgba(7, 17, 27, 0.1))
+				.content
+					line-height: 24px;
+					font-size: 12px;
+					color: #f01414;
+			.supports
+				.support-item
+					padding: 16px 12px;
+					position: relative;
+					font-size: 0;
+					border-1px(rgba(7, 17, 27, 0.1))
+					&:last-child
+						border-none()
+					.icon
+						display: inline-block;
+						width: 16px;
+						height: 16px;
+						vertical-align: top;
+						margin-right: 6px;
+						background-size: 16px 16px;
+						background-repeat: no-repeat;
+						&.decrease
+							bg-images("decrease_4")
+						&.discount
+							bg-images("discount_4")
+						&.guarantee
+							bg-images("guarantee_4")
+						&.invoice
+							bg-images("invoice_4")
+						&.special
+							bg-images("special_4")
+					.text
+						line-height: 16px;
+						font-size: 12px;
+						color: #07111b;
+		.pics
+			padding: 18px;
+			.title
+				margin-bottom: 12px;
+				line-height: 14px;
+				color: #07111b;
+				font-size: 14px;
+			.pic-wrapper
+				width: 100%;
+				overflow: hidden;
+				white-space: nowrap;
+				.pic-item
+					display: inline-block;
+					margin-right: 6px;
+					width: 120px;
+					height: 90px;
+		.info
+			padding: 18px 18px 0 18px;
+			color: #07111b;
+			.title
+				padding-bottom: 12px;
+				line-height: 14px;
+				position: relative;
+				font-size: 14px;
+				border-1px(rgba(7, 17, 27, 0.1))
+			.info-item
+				padding: 16px 12px;
+				line-height: 16px;
+				position: relative;
+				font-size: 12px;
+				border-1px(rgba(7, 17, 27, 0.1))
 </style>
