@@ -7,7 +7,7 @@
 					<router-link to="/goods">商品</router-link>
 				</li>
 				<li class="tab-item">
-					<router-link to="/ratings">评价</router-link>
+					<router-link to="/ratings">评论</router-link>
 				</li>
 				<li class="tab-item">
 					<router-link to="/seller">商家</router-link>
