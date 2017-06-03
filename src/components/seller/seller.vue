@@ -49,10 +49,10 @@
 			<split></split>
 			<div class="pics">
 				<h1 class="title">商家实景</h1>
-				<div class="pic-wrapper">
-					<ul class="pic-list">
-						<li class="pic-item" v-for="item in seller.pics">
-							<img :src="item" width="120" height="90">
+				<div class="pic-wrapper" ref="picWrapper">
+					<ul class="pic-list" ref="picList">
+						<li class="pic-item" v-for="pic in seller.pics">
+							<img :src="pic" width="120" height="90">
 						</li>
 					</ul>
 				</div>
@@ -69,7 +69,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-	import BSscroll from 'better-scroll';
+	import BScroll from 'better-scroll';
 	import star from 'components/star/star';
 	import split from 'components/split/split';
 
@@ -84,17 +84,50 @@
 				classMap: []
 			}
 		},
-		created () {
-			this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-			this.$nextTick(() => {
-				this.scroll = new BSscroll(this.$refs.seller, {
-					click: true
+		watch: {
+			'seller' () {
+				this.$nextTick(() => {
+					this._initScroll();
+					this._initPics();
 				})
+			}
+		},
+		mounted () {
+			this.$nextTick(() => {
+				this._initScroll();
+				this._initPics();
 			})
 		},
-		methods:{
-			_innerScroll () {
-
+		created () {
+			this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+		},
+		methods: {
+			_initScroll () {
+				if (!this.scroll) {
+					this.scroll = new BScroll(this.$refs.seller, {
+						click: true
+					})
+				} else {
+					this.scroll.refresh()
+				}
+			},
+			_initPics () {
+				if (this.seller.pics) {
+					let picWidth = 120;
+					let picMargin = 6;
+					let width = (picWidth + picMargin) * this.seller.pics.length - picMargin;
+					this.$refs.picList.style.width = width + "px";
+					this.$nextTick(() => {
+						if (!this.picScroll) {
+							this.picScroll = new BScroll(this.$refs.picWrapper, {
+								scrollX: true,
+								eventPassthrough: 'vertical'
+							})
+						} else {
+							this.picScroll.refresh();
+						}
+					})
+				}
 			}
 		},
 		components: {
@@ -248,4 +281,6 @@
 				position: relative;
 				font-size: 12px;
 				border-1px(rgba(7, 17, 27, 0.1))
+				&:last-child
+					border-none()
 </style>
