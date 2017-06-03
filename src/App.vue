@@ -30,7 +30,7 @@
 			return {
 				seller: {
 					id: (() => {
-						let queryParam = urlParse()
+						let queryParam = urlParse();
 						return queryParam.id;
 					})()
 				}
