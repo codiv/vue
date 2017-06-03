@@ -21,17 +21,23 @@
 
 <!--suppress JSUnresolvedVariable -->
 <script type="text/ecmascript-6">
-	import header from './components/header/header'
+	import header from './components/header/header';
+	import {urlParse} from 'common/js/util';
 	let ERR_OK = 0
 
 	export default {
 		data () {
 			return {
-				seller: {}
+				seller: {
+					id: (() => {
+						let queryParam = urlParse()
+						return queryParam.id;
+					})()
+				}
 			}
 		},
 		created () {
-			this.$http.get('api/seller').then(response => {
+			this.$http.get('api/seller?' + this.seller.id).then(response => {
 				const res = response.body
 				if (res.errno === ERR_OK) {
 					this.seller = res.data
