@@ -13,10 +13,10 @@ Vue.use(VueRedource)
 
 /* eslint-disable no-new */
 const routes = [
-    // {
-    //     path: '/',
-    //     redirect: '/goods'
-    // },
+    {
+        path: '/',
+        redirect: '/goods'
+    },
     {
         path: '/',
         component: goods

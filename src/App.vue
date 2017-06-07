@@ -37,10 +37,10 @@
 			}
 		},
 		created () {
-			this.$http.get('api/seller?' + this.seller.id).then(response => {
-				const res = response.body
+			this.$http.get('api/seller?id=' + this.seller.id).then(response => {
+				let res = response.body;
 				if (res.errno === ERR_OK) {
-					this.seller = res.data
+					this.seller = Object.assign({}, this.seller, res.data); //花括号叫目标对象，this.seller、res.data是源对象。对象合并是指：将源对象里面的属性添加到目标对象中去，若两者的属性名有冲突，后面的将会覆盖前面的，最终返回目标对象。
 				}
 			})
 		},
